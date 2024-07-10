@@ -39,7 +39,7 @@ static inline BOOL isIPhoneXSeries() {
     BOOL iPhoneXSeries = NO;
     if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPhone) return iPhoneXSeries;
     if (@available(iOS 11.0, *)) {
-        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
+        UIWindow *mainWindow = [UIApplication sharedApplication].windows.firstObject;
         if (mainWindow.safeAreaInsets.bottom > 0.0) iPhoneXSeries = YES;
     }
     return iPhoneXSeries;
@@ -561,7 +561,8 @@ static inline BOOL isIPhoneXSeries() {
     float barH = 44;
     if (isIPhoneXSeries()) {
         if (@available(iOS 11.0, *)) {
-            float safeMargin = [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom;
+            UIWindow *mainWindow = [UIApplication sharedApplication].windows.firstObject;
+            float safeMargin = mainWindow.safeAreaInsets.bottom;
             barH += safeMargin;
         }
     }
